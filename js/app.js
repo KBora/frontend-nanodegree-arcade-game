@@ -65,17 +65,36 @@ Player.prototype.handleInput = function(keyPressed) {
     }
 
 
-    if (this.insideBoard(newX, newY)) {
-        this.x = newX;
-        this.y = newY;
-    }  else {
-        console.log('new coordinates will move sprite off board');
+    if (this.reachWater(newX, newY)) {
+        this.reset();
     }
+    else {
+        if (this.insideBoard(newX, newY)) {
+            this.x = newX;
+            this.y = newY;
+        }  else {
+            console.log('new coordinates will move sprite off board');
+        }
+    }
+
+
 }
 Player.prototype.insideBoard = function(newX, newY) {
     if (newX < 0 || newX > 404) return false;
     if (newY < -32 || newY > 383) return false;
     return true;
+}
+Player.prototype.reachWater = function(newX, newY) {
+    if (newX >= 0 && newX <=404) {
+        if (newY <= -32) {
+            return true;
+        } 
+    }
+    return false;
+}
+Player.prototype.reset = function() {
+    this.x = 202;
+    this.y = 383;
 }
 
 
