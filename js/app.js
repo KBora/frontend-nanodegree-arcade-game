@@ -28,13 +28,15 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function(x, y) {
+var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = x;
-    this.y = y;
+    this.reset();
 };
-Player.prototype.update = function(dt) {
-    // TO DO: update position
+Player.prototype.update = function(x, y) {
+    if (typeof x !== 'undefined' && typeof y !== 'undefined') {
+        this.x = x;
+        this.y = y;
+    }
 }
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -70,8 +72,7 @@ Player.prototype.handleInput = function(keyPressed) {
     }
     else {
         if (this.insideBoard(newX, newY)) {
-            this.x = newX;
-            this.y = newY;
+            this.update(newX, newY);
         }  else {
             console.log('new coordinates will move sprite off board');
         }
@@ -93,8 +94,7 @@ Player.prototype.reachWater = function(newX, newY) {
     return false;
 }
 Player.prototype.reset = function() {
-    this.x = 202;
-    this.y = 383;
+    this.update(202, 383);
 }
 
 
@@ -112,7 +112,7 @@ allEnemies.push(enemy1);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
 
-var player = new Player(202, 383);
+var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
