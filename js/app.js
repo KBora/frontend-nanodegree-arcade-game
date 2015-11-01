@@ -40,23 +40,45 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 Player.prototype.handleInput = function(keyPressed) {
-    // TO DO: handles user input?
+    var newX, newY;
+
     switch (keyPressed) {
         case 'up':
-            this.y -= 83;
+            newY = this.y - 83;
+            newX = this.x;
             break;
         case 'down':
-            this.y += 83;
+            newY = this.y + 83;
+            newX = this.x;
             break;
         case 'left':
-            this.x -= 101;
+            newX = this.x - 101;
+            newY = this.y;
             break;
         case 'right':
-            this.x += 101;
+            newX = this.x + 101;
+            newY = this.y;
             break;
+        default:
+            newX = this.x;
+            newY = this.y;
     }
-    
+
+
+    if (this.insideBoard(newX, newY)) {
+        this.x = newX;
+        this.y = newY;
+    }  else {
+        console.log('new coordinates will move sprite off board');
+    }
 }
+Player.prototype.insideBoard = function(newX, newY) {
+    if (newX < 0 || newX > 404) return false;
+    if (newY < -32 || newY > 383) return false;
+    return true;
+}
+
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -71,7 +93,7 @@ allEnemies.push(enemy1);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
 
-var player = new Player(202, 410);
+var player = new Player(202, 383);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
