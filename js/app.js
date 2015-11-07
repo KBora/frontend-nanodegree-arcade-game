@@ -84,12 +84,12 @@ Player.prototype.handleInput = function(keyPressed) {
 }
 Player.prototype.insideBoard = function(newX, newY) {
     if (newX < 0 || newX > 404) return false;
-    if (newY < -32 || newY > 383) return false;
+    if (newY < -12 || newY > 402) return false;
     return true;
 }
 Player.prototype.reachWater = function(newX, newY) {
     if (newX >= 0 && newX <=404) {
-        if (newY <= -32) {
+        if (newY <= -12) {
             return true;
         } 
     }

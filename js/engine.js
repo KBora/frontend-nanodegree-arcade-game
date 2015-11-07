@@ -155,6 +155,7 @@ var Engine = (function(global) {
         });
 
         player.render();
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -180,6 +181,7 @@ var Engine = (function(global) {
         var rectPlayer = {x: player.x, y: player.x, width: 101, height: 3333 };
 
         ctx.rect(player.x+17,player.y+63,68,80);
+        ctx.rect(player.x,player.y,101,171);
         ctx.stroke();
     }
     /* Go ahead and load all of the images we know we're going to need to
