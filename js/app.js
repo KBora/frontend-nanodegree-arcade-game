@@ -1,3 +1,4 @@
+// ---------------- ENEMY CLASS ---------------- //
 // Enemies our player must avoid
 var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
@@ -25,6 +26,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// ---------------- PLAYER CLASS ---------------- //
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -94,7 +96,8 @@ Player.prototype.reachWater = function(newX, newY) {
     return false;
 }
 Player.prototype.reset = function() {
-    this.update(202, 383);
+    this.update(202, 402);
+    // 202, 383
 }
 
 
@@ -113,6 +116,7 @@ allEnemies.push(enemy2);
 allEnemies.push(enemy3);
 
 var player = new Player();
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
