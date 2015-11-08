@@ -171,17 +171,32 @@ var Engine = (function(global) {
         var rect1 = {x: 5, y: 5, width: 50, height: 50}
         var rect2 = {x: 20, y: 10, width: 10, height: 10}
 
-        if (rect1.x < rect2.x + rect2.width &&
-           rect1.x + rect1.width > rect2.x &&
-           rect1.y < rect2.y + rect2.height &&
-           rect1.height + rect1.y > rect2.y) {
-            // collision detected!
-        }
+
         */ 
-        var rectPlayer = {x: player.x, y: player.x, width: 101, height: 3333 };
+        var rectPlayer = {x: player.x+17, y: player.y+63, width: 68, height: 80 };
+
+
+        allEnemies.forEach(function(enemy) {
+            var rectEnemy = {x: enemy.x, y: enemy.y+77, width: 100, height: 65 };
+
+            if (rectEnemy.x < rectPlayer.x + rectPlayer.width &&
+               rectEnemy.x + rectEnemy.width > rectPlayer.x &&
+               rectEnemy.y < rectPlayer.y + rectPlayer.height &&
+               rectEnemy.height + rectEnemy.y > rectPlayer.y) {
+                // collision detected!
+                console.log("collision detected");
+            }
+
+
+            ctx.rect(rectEnemy.x, rectEnemy.y, rectEnemy.width, rectEnemy.height);
+            ctx.strokeStyle = "orange";
+            ctx.stroke(); 
+        });
+
 
         ctx.rect(player.x+17,player.y+63,68,80);
         ctx.rect(player.x,player.y,101,171);
+        ctx.strokeStyle = "yellow";
         ctx.stroke();
     }
     /* Go ahead and load all of the images we know we're going to need to
