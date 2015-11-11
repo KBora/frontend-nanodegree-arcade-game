@@ -155,7 +155,6 @@ var Engine = (function(global) {
         });
 
         player.render();
-
     }
 
     /* This function does nothing but it could have been a good place to
@@ -173,11 +172,11 @@ var Engine = (function(global) {
 
 
         */ 
-        var rectPlayer = {x: player.x+17, y: player.y+63, width: 68, height: 80 };
+        var rectPlayer = {x: player.x+17+10, y: player.y+63+15, width: 68-17, height: 80-30 };
 
 
         allEnemies.forEach(function(enemy) {
-            var rectEnemy = {x: enemy.x, y: enemy.y+77, width: 100, height: 65 };
+            var rectEnemy = {x: enemy.x+10, y: enemy.y+77+10, width: 100-10, height: 65-20 };
 
             if (rectEnemy.x < rectPlayer.x + rectPlayer.width &&
                rectEnemy.x + rectEnemy.width > rectPlayer.x &&
@@ -185,18 +184,18 @@ var Engine = (function(global) {
                rectEnemy.height + rectEnemy.y > rectPlayer.y) {
                 // collision detected!
                 console.log("collision detected");
+                player.reset()
             }
 
 
             ctx.rect(rectEnemy.x, rectEnemy.y, rectEnemy.width, rectEnemy.height);
-            ctx.strokeStyle = "orange";
-            ctx.stroke(); 
         });
 
 
-        ctx.rect(player.x+17,player.y+63,68,80);
-        ctx.rect(player.x,player.y,101,171);
-        ctx.strokeStyle = "yellow";
+        //ctx.rect(player.x+17,player.y+63,68,80);
+        ctx.rect(rectPlayer.x, rectPlayer.y, rectPlayer.width, rectPlayer.height);
+        //ctx.rect(player.x,player.y,101,171);
+        ctx.strokeStyle = "blue";
         ctx.stroke();
     }
     /* Go ahead and load all of the images we know we're going to need to
