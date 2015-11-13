@@ -166,14 +166,7 @@ var Engine = (function(global) {
     }
 
     function checkCollisions() {
-        /*
-        var rect1 = {x: 5, y: 5, width: 50, height: 50}
-        var rect2 = {x: 20, y: 10, width: 10, height: 10}
-
-
-        */ 
         var rectPlayer = {x: player.x+17+10, y: player.y+63+15, width: 68-17, height: 80-30 };
-
 
         allEnemies.forEach(function(enemy) {
             var rectEnemy = {x: enemy.x+10, y: enemy.y+77+10, width: 100-10, height: 65-20 };
@@ -187,16 +180,7 @@ var Engine = (function(global) {
                 player.reset()
             }
 
-
-            ctx.rect(rectEnemy.x, rectEnemy.y, rectEnemy.width, rectEnemy.height);
         });
-
-
-        //ctx.rect(player.x+17,player.y+63,68,80);
-        ctx.rect(rectPlayer.x, rectPlayer.y, rectPlayer.width, rectPlayer.height);
-        //ctx.rect(player.x,player.y,101,171);
-        ctx.strokeStyle = "blue";
-        ctx.stroke();
     }
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when

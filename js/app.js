@@ -26,6 +26,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+
 // ---------------- PLAYER CLASS ---------------- //
 // Now write your own player class
 // This class requires an update(), render() and
