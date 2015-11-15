@@ -27,16 +27,18 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+}
 
 Enemy.prototype.randomSpeed = function() {
     return 4 * (Math.random() * (20 - 1) + 1);
 }
 
+
 Enemy.prototype.reset = function() {
-    this.x = -100;
+    this.x = -(Math.random() * (200 - 100) + 100);
     this.speed = this.randomSpeed();
 }
+
 
 Enemy.prototype.insideBoard = function(newX) {
     if (newX > 510) return false;
