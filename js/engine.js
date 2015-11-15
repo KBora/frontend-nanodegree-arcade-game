@@ -29,7 +29,7 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
-    ctx.globalAlpha = 0.5;
+    //  ctx.globalAlpha = 0.5;
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -155,6 +155,7 @@ var Engine = (function(global) {
         });
 
         player.render();
+        game.displayScore(ctx);
     }
 
     /* This function does nothing but it could have been a good place to

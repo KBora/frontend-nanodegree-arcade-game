@@ -33,9 +33,13 @@ Enemy.prototype.randomSpeed = function() {
     return 4 * (Math.random() * (20 - 1) + 1);
 }
 
+Enemy.prototype.randomXStartPosition = function() {
+    return -(Math.random() * (200 - 100) + 100);
+}
 
 Enemy.prototype.reset = function() {
-    this.x = -(Math.random() * (200 - 100) + 100);
+   // this.x = -(Math.random() * (200 - 100) + 100);
+    this.x = this.randomXStartPosition();
     this.speed = this.randomSpeed();
 }
 
@@ -89,6 +93,7 @@ Player.prototype.handleInput = function(keyPressed) {
 
 
     if (this.reachWater(newX, newY)) {
+        game.updateScore(10);
         this.reset();
     }
     else {
@@ -119,16 +124,33 @@ Player.prototype.reset = function() {
     // 202, 383
 }
 
+// ---------------- GAME CLASS ---------------- //
+// For keeping score
+var Game = function() {
+    this.score = 0;
+};
 
+Game.prototype.updateScore = function(amount) {
+    this.score = this.score + amount;
+}
+Game.prototype.displayScore = function(ctx) {
+    ctx.textAlign = "right";
+    ctx.textBaseline = "top";
+    ctx.font = "bold 26px sans-serif";
+    ctx.fillStyle = "white";
+    ctx.fillText(this.score, 495, 80);
+    ctx.font = "normal 18px sans-serif";
+    ctx.fillText("Score:", 495, 60);
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
 
-var enemy1 = new Enemy(-100, 63, Enemy.prototype.randomSpeed() );
-var enemy2 = new Enemy(-100, 146, Enemy.prototype.randomSpeed() );
-var enemy3 = new Enemy(-100, 229, Enemy.prototype.randomSpeed() );
+var enemy1 = new Enemy(Enemy.prototype.randomXStartPosition(), 63, Enemy.prototype.randomSpeed() );
+var enemy2 = new Enemy(Enemy.prototype.randomXStartPosition(), 146, Enemy.prototype.randomSpeed() );
+var enemy3 = new Enemy(Enemy.prototype.randomXStartPosition(), 229, Enemy.prototype.randomSpeed() );
 
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
@@ -136,6 +158,7 @@ allEnemies.push(enemy3);
 
 var player = new Player();
 
+var game = new Game();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
