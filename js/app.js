@@ -19,6 +19,9 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += (dt * this.speed) ;
+    if( !Enemy.prototype.insideBoard(this.x)) {
+        this.reset();
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -26,6 +29,19 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+Enemy.prototype.randomSpeed = function() {
+    return 4 * (Math.random() * (20 - 1) + 1);
+}
+
+Enemy.prototype.reset = function() {
+    this.x = -100;
+    this.speed = this.randomSpeed();
+}
+
+Enemy.prototype.insideBoard = function(newX) {
+    if (newX > 510) return false;
+    return true;
+}
 
 // ---------------- PLAYER CLASS ---------------- //
 // Now write your own player class
@@ -108,9 +124,9 @@ Player.prototype.reset = function() {
 // Place the player object in a variable called player
 var allEnemies = [];
 
-var enemy1 = new Enemy(0, 63, 1);
-var enemy2 = new Enemy(-10, 146, 5);
-var enemy3 = new Enemy(0, 229, 2);
+var enemy1 = new Enemy(-100, 63, Enemy.prototype.randomSpeed() );
+var enemy2 = new Enemy(-100, 146, Enemy.prototype.randomSpeed() );
+var enemy3 = new Enemy(-100, 229, Enemy.prototype.randomSpeed() );
 
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
