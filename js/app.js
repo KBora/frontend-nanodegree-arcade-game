@@ -131,7 +131,9 @@ var Game = function() {
 };
 
 Game.prototype.updateScore = function(amount) {
-    this.score = this.score + amount;
+    var updatedScore = this.score + amount;
+    updatedScore = updatedScore < 0 ? 0 : updatedScore;
+    this.score = updatedScore;
 }
 Game.prototype.displayScore = function(ctx) {
     ctx.textAlign = "right";

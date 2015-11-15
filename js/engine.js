@@ -177,7 +177,8 @@ var Engine = (function(global) {
                rectEnemy.y < rectPlayer.y + rectPlayer.height &&
                rectEnemy.height + rectEnemy.y > rectPlayer.y) {
                 // collision detected!
-                console.log("collision detected");
+                //console.log("collision detected");
+                game.updateScore(-50);
                 player.reset()
             }
 
