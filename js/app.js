@@ -53,8 +53,8 @@ Enemy.prototype.insideBoard = function(newX) {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function() {
-    this.sprite = 'images/char-boy.png';
+var Player = function(spriteURL) {
+    this.sprite = spriteURL;
     this.reset();
 };
 Player.prototype.update = function(x, y) {
@@ -158,7 +158,18 @@ allEnemies.push(enemy1);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
 
-var player = new Player();
+var player = new Player('images/char-boy.png');
+
+
+var allPlayers = [];
+var playerBoy = new Player('images/char-boy.png');
+var playerCatGirl = new Player('images/char-cat-girl.png');
+var playerHornGirl = new Player('images/char-horn-girl.png');
+var playerPrincessGirl = new Player('images/char-princess-girl.png');
+allPlayers.push(playerBoy);
+allPlayers.push(playerCatGirl);
+allPlayers.push(playerHornGirl);
+allPlayers.push(playerPrincessGirl);
 
 var game = new Game();
 

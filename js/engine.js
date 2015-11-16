@@ -48,6 +48,7 @@ var Engine = (function(global) {
          * our update function since it may be used for smooth animation.
          */
         update(dt);
+
         render();
 
         /* Set our lastTime variable which is used to determine the time delta
@@ -68,7 +69,11 @@ var Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
-        main();
+
+        /* player selection goes here */
+        renderPlayerSelectionScreen();
+
+        //main();
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -142,6 +147,19 @@ var Engine = (function(global) {
         renderEntities();
     }
 
+    function renderPlayerSelectionScreen() {
+        var x;
+        var y;
+
+        x = 30;
+        y = 100;
+
+        allPlayers.forEach(function(p) {
+            p.update(x, y);
+            p.render();
+            x = x + 110;
+        });
+    }
     /* This function is called by the render function and is called on each game
      * tick. It's purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
@@ -193,7 +211,11 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-princess-girl.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 
