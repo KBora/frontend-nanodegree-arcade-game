@@ -125,9 +125,10 @@ Player.prototype.reset = function() {
 }
 
 // ---------------- GAME CLASS ---------------- //
-// For keeping score
+
 var Game = function() {
     this.score = 0;
+    this.state = "choose-player";
 };
 
 Game.prototype.updateScore = function(amount) {
@@ -144,6 +145,46 @@ Game.prototype.displayScore = function(ctx) {
     ctx.font = "normal 18px sans-serif";
     ctx.fillText("Score:", 495, 60);
 }
+Game.prototype.beginGame = function() {
+    this.state = "in-game";
+}
+
+// ----------- SELECTOR -----------//
+var Selector = function(selectorURL) {
+    this.sprite = selectorURL;
+    this.x = 30;
+    this.y = 150;
+}   
+Selector.prototype.update = function(x, y) {
+    if (typeof x !== 'undefined' && typeof y !== 'undefined') {
+        this.x = x;
+        this.y = y;
+    }
+}
+Selector.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+Selector.prototype.handleInput = function(keyPressed) {
+    var newX, newY;
+
+    switch (keyPressed) {
+
+        case 'left':
+            newX = this.x - 110;
+            newY = this.y;
+            break;
+        case 'right':
+            newX = this.x + 110;
+            newY = this.y;
+            break;
+        default:
+            newX = this.x;
+            newY = this.y;
+    }
+    this.update(newX, newY);
+
+}
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -173,6 +214,8 @@ allPlayers.push(playerPrincessGirl);
 
 var game = new Game();
 
+var selector = new Selector('images/Selector.png');
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
@@ -184,11 +227,5 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
-});
-
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-playerBoy.addEventListener('click', function(e) {
-    this.reset();
+    selector.handleInput(allowedKeys[e.keyCode]);
 });

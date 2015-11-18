@@ -29,8 +29,6 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
-    var currentGameState = "ChoosePlayer";
-
     //  ctx.globalAlpha = 0.5;
 
     /* This function serves as the kickoff point for the game loop itself
@@ -50,7 +48,6 @@ var Engine = (function(global) {
          * our update function since it may be used for smooth animation.
          */
         update(dt);
-
         render();
 
         /* Set our lastTime variable which is used to determine the time delta
@@ -84,10 +81,11 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        switch(currentGameState) {
-            case "ChoosePlayer":
+        switch(game.state) {
+            case "choose-player":
+                selector.update();
                 break;
-            case "InGame":
+            case "in-game":
                 updateEntities(dt);
                 checkCollisions();
                 break;
@@ -115,11 +113,11 @@ var Engine = (function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
-        switch(currentGameState) {
-            case "ChoosePlayer":
-                renderPlayerSelectionScreen();
+        switch(game.state) {
+            case "choose-player":
+                renderChoosePlayerScreen();
                 break;
-            case "InGame":
+            case "in-game":
                 /* This array holds the relative URL to the image used
                  * for that particular row of the game level.
                  */
@@ -159,19 +157,27 @@ var Engine = (function(global) {
         
     }
 
-    function renderPlayerSelectionScreen() {
+    function renderChoosePlayerScreen() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         var x;
         var y;
 
         x = 30;
         y = 100;
 
+        selector.render();
+        
         allPlayers.forEach(function(p) {
             p.update(x, y);
             p.render();
             x = x + 110;
         });
+
+        
+        
     }
+
+
     /* This function is called by the render function and is called on each game
      * tick. It's purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
