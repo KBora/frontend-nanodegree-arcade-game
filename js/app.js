@@ -177,6 +177,9 @@ Selector.prototype.handleInput = function(keyPressed) {
             newX = this.x + 110;
             newY = this.y;
             break;
+        case 'enter':
+            game.state = "in-game";
+            break;
         default:
             newX = this.x;
             newY = this.y;
@@ -223,7 +226,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        13: 'enter'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
