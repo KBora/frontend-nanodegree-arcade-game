@@ -166,14 +166,18 @@ var Engine = (function(global) {
         y = 100;
 
         selector.render();
-        
+
         allPlayers.forEach(function(p) {
             p.update(x, y);
             p.render();
             x = x + 110;
         });
 
-        
+        // instructinos
+        ctx.textAlign = "center";
+        ctx.font = "bold 18px sans-serif";
+        ctx.fillStyle = "black";
+        ctx.fillText("Select a player using the arrow keys then press Enter", 250, 80);
         
     }
 
