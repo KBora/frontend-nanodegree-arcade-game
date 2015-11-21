@@ -219,7 +219,7 @@ var Engine = (function(global) {
                 // collision detected!
                 //console.log("collision detected");
                 game.updateScore(-50);
-                player.reset()
+                player.reset();
             }
 
         });

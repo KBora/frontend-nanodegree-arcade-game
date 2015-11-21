@@ -27,27 +27,27 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 Enemy.prototype.randomSpeed = function() {
     return 4 * (Math.random() * (20 - 1) + 1);
-}
+};
 
 Enemy.prototype.randomXStartPosition = function() {
     return -(Math.random() * (200 - 100) + 100);
-}
+};
 
 Enemy.prototype.reset = function() {
    // this.x = -(Math.random() * (200 - 100) + 100);
     this.x = this.randomXStartPosition();
     this.speed = this.randomSpeed();
-}
+};
 
 
 Enemy.prototype.insideBoard = function(newX) {
     if (newX > 510) return false;
     return true;
-}
+};
 
 // ---------------- PLAYER CLASS ---------------- //
 // Now write your own player class
@@ -57,15 +57,18 @@ var Player = function(spriteURL) {
     this.sprite = spriteURL;
     this.reset();
 };
+
 Player.prototype.update = function(x, y) {
     if (typeof x !== 'undefined' && typeof y !== 'undefined') {
         this.x = x;
         this.y = y;
     }
-}
+};
+
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
+
 Player.prototype.handleInput = function(keyPressed) {
     var newX, newY;
 
@@ -105,12 +108,14 @@ Player.prototype.handleInput = function(keyPressed) {
     }
 
 
-}
+};
+
 Player.prototype.insideBoard = function(newX, newY) {
     if (newX < 0 || newX > 404) return false;
     if (newY < -12 || newY > 402) return false;
     return true;
-}
+};
+
 Player.prototype.reachWater = function(newX, newY) {
     if (newX >= 0 && newX <=404) {
         if (newY <= -12) {
@@ -118,11 +123,12 @@ Player.prototype.reachWater = function(newX, newY) {
         } 
     }
     return false;
-}
+};
+
 Player.prototype.reset = function() {
     this.update(202, 402);
     // 202, 383
-}
+};
 
 // ---------------- GAME CLASS ---------------- //
 
@@ -136,7 +142,8 @@ Game.prototype.updateScore = function(amount) {
     var updatedScore = this.score + amount;
     updatedScore = updatedScore < 0 ? 0 : updatedScore;
     this.score = updatedScore;
-}
+};
+
 Game.prototype.displayScore = function() {
     ctx.textAlign = "right";
     ctx.textBaseline = "top";
@@ -145,33 +152,38 @@ Game.prototype.displayScore = function() {
     ctx.fillText(this.score, 495, 80);
     ctx.font = "normal 18px sans-serif";
     ctx.fillText("Score:", 495, 60);
-}
+};
+
 Game.prototype.beginGame = function() {
     this.state = "in-game";
-}
+};
+
 Game.prototype.inGame = function() {
     if (this.state === "in-game") {
         return true;
     } else {
         return false;
     }
-}
+};
 
 // ----------- SELECTOR -----------//
 var Selector = function(selectorURL, defaultSprite) {
     this.imgURL = selectorURL;
     this.x = 30;
     this.y = 150;
-}   
+};
+
 Selector.prototype.update = function(x, y) {
     if (typeof x !== 'undefined' && typeof y !== 'undefined') {
         this.x = x;
         this.y = y;
     }
-}
+};
+
 Selector.prototype.render = function() {
     ctx.drawImage(Resources.get(this.imgURL), this.x, this.y);
-}
+};
+
 Selector.prototype.handleInput = function(keyPressed) {
     var newX, newY;
 
@@ -211,13 +223,13 @@ Selector.prototype.handleInput = function(keyPressed) {
 
         });
     }
-}
+};
 
 Selector.prototype.insideBoard = function(newX, newY) {
     if (newX < 0 || newX > 404) return false;
     if (newY < -12 || newY > 402) return false;
     return true;
-}
+};
 
 
 // Now instantiate your objects.
@@ -248,7 +260,6 @@ allPlayers.push(playerBoy);
 allPlayers.push(playerCatGirl);
 allPlayers.push(playerHornGirl);
 allPlayers.push(playerPrincessGirl);
-
 
 var game = new Game();
 
