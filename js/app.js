@@ -82,22 +82,24 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(keyPressed) {
     var newX, newY;
+    var movementVertical = 83;
+    var movementHorizontal = 101;
 
     switch (keyPressed) {
         case 'up':
-            newY = this.y - 83;
+            newY = this.y - movementVertical;
             newX = this.x;
             break;
         case 'down':
-            newY = this.y + 83;
+            newY = this.y + movementVertical;
             newX = this.x;
             break;
         case 'left':
-            newX = this.x - 101;
+            newX = this.x - movementHorizontal;
             newY = this.y;
             break;
         case 'right':
-            newX = this.x + 101;
+            newX = this.x + movementHorizontal;
             newY = this.y;
             break;
         default:
