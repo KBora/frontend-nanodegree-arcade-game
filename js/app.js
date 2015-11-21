@@ -252,24 +252,13 @@ for (var i = 0; i < totalEnemies; i++) {
     allEnemies.push(new Enemy(Enemy.prototype.randomXStartPosition(), Enemy.prototype.randomYPosition(), Enemy.prototype.randomSpeed() ));
 }
 
-// var enemy1 = new Enemy(Enemy.prototype.randomXStartPosition(), 63, Enemy.prototype.randomSpeed() );
-// var enemy2 = new Enemy(Enemy.prototype.randomXStartPosition(), 146, Enemy.prototype.randomSpeed() );
-// var enemy3 = new Enemy(Enemy.prototype.randomXStartPosition(), 229, Enemy.prototype.randomSpeed() );
-
-// allEnemies.push(enemy1);
-// allEnemies.push(enemy2);
-// allEnemies.push(enemy3);
-
 var player = new Player('images/char-boy.png');
 
-
 var allPlayers = [];
-
 var playerBoy = new Player('images/char-boy.png');
 var playerCatGirl = new Player('images/char-cat-girl.png');
 var playerHornGirl = new Player('images/char-horn-girl.png');
 var playerPrincessGirl = new Player('images/char-princess-girl.png');
-
 
 allPlayers.push(playerBoy);
 allPlayers.push(playerCatGirl);
