@@ -100,7 +100,7 @@ Player.prototype.handleInput = function(keyPressed) {
         if (this.insideBoard(newX, newY)) {
             this.update(newX, newY);
         }  else {
-            console.log('new coordinates will move sprite off board');
+            // console.log('new coordinates will move sprite off board');
         }
     }
 
@@ -129,6 +129,7 @@ Player.prototype.reset = function() {
 var Game = function() {
     this.score = 0;
     this.state = "choose-player";
+    this.selectedSprite = "";
 };
 
 Game.prototype.updateScore = function(amount) {
@@ -157,8 +158,8 @@ Game.prototype.inGame = function() {
 }
 
 // ----------- SELECTOR -----------//
-var Selector = function(selectorURL) {
-    this.sprite = selectorURL;
+var Selector = function(selectorURL, defaultSprite) {
+    this.imgURL = selectorURL;
     this.x = 30;
     this.y = 150;
 }   
@@ -169,7 +170,7 @@ Selector.prototype.update = function(x, y) {
     }
 }
 Selector.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.imgURL), this.x, this.y);
 }
 Selector.prototype.handleInput = function(keyPressed) {
     var newX, newY;
@@ -186,6 +187,7 @@ Selector.prototype.handleInput = function(keyPressed) {
             break;
         case 'enter':
             game.state = "in-game";
+            player.sprite = game.selectedSprite;
             break;
         default:
             newX = this.x;
@@ -193,9 +195,24 @@ Selector.prototype.handleInput = function(keyPressed) {
     }
     if (this.insideBoard(newX, newY)) {
         this.update(newX, newY);
+
+        // check for collision and set this.sprite value to match collided player's sprite value
+        var rectSelector = {x: this.x+17+10, y: this.y+63+15, width: 68-17, height: 80-30 };
+
+        allPlayers.forEach(function(p) {
+            var rectPlayer = {x: p.x+10, y: p.y+77+10, width: 100-10, height: 65-20 };
+
+            if (rectSelector.x < rectPlayer.x + rectPlayer.width &&
+               rectSelector.x + rectSelector.width > rectPlayer.x &&
+               rectSelector.y < rectPlayer.y + rectPlayer.height &&
+               rectSelector.height + rectSelector.y > rectPlayer.y) {
+                game.selectedSprite = p.sprite;
+            }
+
+        });
     }
-    
 }
+
 Selector.prototype.insideBoard = function(newX, newY) {
     if (newX < 0 || newX > 404) return false;
     if (newY < -12 || newY > 402) return false;
@@ -220,18 +237,22 @@ var player = new Player('images/char-boy.png');
 
 
 var allPlayers = [];
+
 var playerBoy = new Player('images/char-boy.png');
 var playerCatGirl = new Player('images/char-cat-girl.png');
 var playerHornGirl = new Player('images/char-horn-girl.png');
 var playerPrincessGirl = new Player('images/char-princess-girl.png');
+
+
 allPlayers.push(playerBoy);
 allPlayers.push(playerCatGirl);
 allPlayers.push(playerHornGirl);
 allPlayers.push(playerPrincessGirl);
 
+
 var game = new Game();
 
-var selector = new Selector('images/Selector.png');
+var selector = new Selector('images/Selector.png', playerBoy.sprite);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -244,8 +265,9 @@ document.addEventListener('keyup', function(e) {
         13: 'enter'
     };
     if (game.inGame()) {
-        
+        player.handleInput(allowedKeys[e.keyCode]);
+    } else {
+        selector.handleInput(allowedKeys[e.keyCode]);
     }
-    player.handleInput(allowedKeys[e.keyCode]);
-    selector.handleInput(allowedKeys[e.keyCode]);
+    
 });
