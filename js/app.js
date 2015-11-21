@@ -29,23 +29,34 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Returns a random number between 4 and 80
 Enemy.prototype.randomSpeed = function() {
     return 4 * (Math.random() * (20 - 1) + 1);
 };
 
+// Returns a random x co-ordinate between -200 and -100
+// so that enemy is placed outside of the canvas
 Enemy.prototype.randomXStartPosition = function() {
     return -(Math.random() * (200 - 100) + 100);
 };
 
+// Returns one of 3 possible y co-ordinates
+Enemy.prototype.randomYPosition = function() {
+    var yCoords = [63, 146, 229];
+    var randomIndex  = Math.floor(Math.random()*yCoords.length);
+    return yCoords[randomIndex];
+};
+
+// Resets the enemy position to a starting point outside of the canvas
 Enemy.prototype.reset = function() {
-   // this.x = -(Math.random() * (200 - 100) + 100);
     this.x = this.randomXStartPosition();
+    this.y = this.randomYPosition();
     this.speed = this.randomSpeed();
 };
 
-
+// Check if the enemy is width the board
 Enemy.prototype.insideBoard = function(newX) {
-    if (newX > 510) return false;
+    if (newX > ctx.canvas.width) return false;
     return true;
 };
 
@@ -127,15 +138,14 @@ Player.prototype.reachWater = function(newX, newY) {
 
 Player.prototype.reset = function() {
     this.update(202, 402);
-    // 202, 383
 };
 
 // ---------------- GAME CLASS ---------------- //
 
 var Game = function() {
     this.score = 0;
-    this.state = "choose-player";
-    this.selectedSprite = "";
+    this.state = 'choose-player';
+    this.selectedSprite = '';
 };
 
 Game.prototype.updateScore = function(amount) {
@@ -145,21 +155,21 @@ Game.prototype.updateScore = function(amount) {
 };
 
 Game.prototype.displayScore = function() {
-    ctx.textAlign = "right";
-    ctx.textBaseline = "top";
-    ctx.font = "bold 26px sans-serif";
-    ctx.fillStyle = "white";
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillStyle = 'white';
     ctx.fillText(this.score, 495, 80);
-    ctx.font = "normal 18px sans-serif";
-    ctx.fillText("Score:", 495, 60);
+    ctx.font = 'normal 18px sans-serif';
+    ctx.fillText('Score:', 495, 60);
 };
 
 Game.prototype.beginGame = function() {
-    this.state = "in-game";
+    this.state = 'in-game';
 };
 
 Game.prototype.inGame = function() {
-    if (this.state === "in-game") {
+    if (this.state === 'in-game') {
         return true;
     } else {
         return false;
@@ -198,7 +208,7 @@ Selector.prototype.handleInput = function(keyPressed) {
             newY = this.y;
             break;
         case 'enter':
-            game.state = "in-game";
+            game.state = 'in-game';
             player.sprite = game.selectedSprite;
             break;
         default:
@@ -236,14 +246,19 @@ Selector.prototype.insideBoard = function(newX, newY) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
+var totalEnemies = 4;
+for (var i = 0; i < totalEnemies; i++) {
+    // Your code goes here
+    allEnemies.push(new Enemy(Enemy.prototype.randomXStartPosition(), Enemy.prototype.randomYPosition(), Enemy.prototype.randomSpeed() ));
+}
 
-var enemy1 = new Enemy(Enemy.prototype.randomXStartPosition(), 63, Enemy.prototype.randomSpeed() );
-var enemy2 = new Enemy(Enemy.prototype.randomXStartPosition(), 146, Enemy.prototype.randomSpeed() );
-var enemy3 = new Enemy(Enemy.prototype.randomXStartPosition(), 229, Enemy.prototype.randomSpeed() );
+// var enemy1 = new Enemy(Enemy.prototype.randomXStartPosition(), 63, Enemy.prototype.randomSpeed() );
+// var enemy2 = new Enemy(Enemy.prototype.randomXStartPosition(), 146, Enemy.prototype.randomSpeed() );
+// var enemy3 = new Enemy(Enemy.prototype.randomXStartPosition(), 229, Enemy.prototype.randomSpeed() );
 
-allEnemies.push(enemy1);
-allEnemies.push(enemy2);
-allEnemies.push(enemy3);
+// allEnemies.push(enemy1);
+// allEnemies.push(enemy2);
+// allEnemies.push(enemy3);
 
 var player = new Player('images/char-boy.png');
 

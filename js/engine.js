@@ -82,10 +82,10 @@ var Engine = (function(global) {
      */
     function update(dt) {
         switch(game.state) {
-            case "choose-player":
+            case 'choose-player':
                 selector.update();
                 break;
-            case "in-game":
+            case 'in-game':
                 updateEntities(dt);
                 checkCollisions();
                 break;
@@ -114,10 +114,10 @@ var Engine = (function(global) {
      */
     function render() {
         switch(game.state) {
-            case "choose-player":
+            case 'choose-player':
                 renderChoosePlayerScreen();
                 break;
-            case "in-game":
+            case 'in-game':
                 /* This array holds the relative URL to the image used
                  * for that particular row of the game level.
                  */
@@ -174,10 +174,10 @@ var Engine = (function(global) {
         });
 
         // instructinos
-        ctx.textAlign = "center";
-        ctx.font = "bold 18px sans-serif";
-        ctx.fillStyle = "black";
-        ctx.fillText("Select a player using the arrow keys then press Enter", 250, 80);
+        ctx.textAlign = 'center';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillStyle = 'black';
+        ctx.fillText('Select a player using the arrow keys then press Enter', 250, 80);
         
     }
 
