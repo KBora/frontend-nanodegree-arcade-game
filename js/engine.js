@@ -195,7 +195,7 @@ var Engine = (function(global) {
         });
 
         player.render();
-        game.displayScore(ctx);
+        game.displayScore();
     }
 
     /* This function does nothing but it could have been a good place to

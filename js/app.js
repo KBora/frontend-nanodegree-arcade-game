@@ -136,7 +136,7 @@ Game.prototype.updateScore = function(amount) {
     updatedScore = updatedScore < 0 ? 0 : updatedScore;
     this.score = updatedScore;
 }
-Game.prototype.displayScore = function(ctx) {
+Game.prototype.displayScore = function() {
     ctx.textAlign = "right";
     ctx.textBaseline = "top";
     ctx.font = "bold 26px sans-serif";
@@ -147,6 +147,13 @@ Game.prototype.displayScore = function(ctx) {
 }
 Game.prototype.beginGame = function() {
     this.state = "in-game";
+}
+Game.prototype.inGame = function() {
+    if (this.state === "in-game") {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // ----------- SELECTOR -----------//
@@ -184,8 +191,15 @@ Selector.prototype.handleInput = function(keyPressed) {
             newX = this.x;
             newY = this.y;
     }
-    this.update(newX, newY);
-
+    if (this.insideBoard(newX, newY)) {
+        this.update(newX, newY);
+    }
+    
+}
+Selector.prototype.insideBoard = function(newX, newY) {
+    if (newX < 0 || newX > 404) return false;
+    if (newY < -12 || newY > 402) return false;
+    return true;
 }
 
 
@@ -229,7 +243,9 @@ document.addEventListener('keyup', function(e) {
         40: 'down',
         13: 'enter'
     };
-
+    if (game.inGame()) {
+        
+    }
     player.handleInput(allowedKeys[e.keyCode]);
     selector.handleInput(allowedKeys[e.keyCode]);
 });
