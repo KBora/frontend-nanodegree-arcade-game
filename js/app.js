@@ -18,8 +18,10 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += (dt * this.speed) ;
-    if( !Enemy.prototype.insideBoard(this.x)) {
+    this.x += (dt * this.speed);
+    // Reposition the enemy to a starting position to the left of canvas
+    // So that is looks like there are new enemies coming all the time
+    if( ! this.insideBoard(this.x)) {
         this.reset();
     }
 };
@@ -107,7 +109,6 @@ Player.prototype.handleInput = function(keyPressed) {
             newY = this.y;
     }
 
-
     if (this.reachWater(newX, newY)) {
         game.updateScore(10);
         this.reset();
@@ -119,16 +120,14 @@ Player.prototype.handleInput = function(keyPressed) {
             // console.log('new coordinates will move sprite off board');
         }
     }
-
-
 };
-
+// Checks if the player is inside the game board
 Player.prototype.insideBoard = function(newX, newY) {
     if (newX < 0 || newX > 404) return false;
     if (newY < -12 || newY > 402) return false;
     return true;
 };
-
+// Checks if the player has reached the water
 Player.prototype.reachWater = function(newX, newY) {
     if (newX >= 0 && newX <=404) {
         if (newY <= -12) {
@@ -137,25 +136,25 @@ Player.prototype.reachWater = function(newX, newY) {
     }
     return false;
 };
-
+// Resets player by moving them to the initial starting position
 Player.prototype.reset = function() {
     this.update(202, 402);
 };
 
 // ---------------- GAME CLASS ---------------- //
-
+// This is used to store variables that are game wide
 var Game = function() {
     this.score = 0;
     this.state = 'choose-player';
     this.selectedSprite = '';
 };
-
+// Update a score within the game
 Game.prototype.updateScore = function(amount) {
     var updatedScore = this.score + amount;
     updatedScore = updatedScore < 0 ? 0 : updatedScore;
     this.score = updatedScore;
 };
-
+// Display the score in the top right corner of the game
 Game.prototype.displayScore = function() {
     ctx.textAlign = 'right';
     ctx.textBaseline = 'top';
@@ -165,11 +164,11 @@ Game.prototype.displayScore = function() {
     ctx.font = 'normal 18px sans-serif';
     ctx.fillText('Score:', 495, 60);
 };
-
+// Change status of the game from the player selection screen to the actual game itself
 Game.prototype.beginGame = function() {
     this.state = 'in-game';
 };
-
+// Check if the game has begun
 Game.prototype.inGame = function() {
     if (this.state === 'in-game') {
         return true;
@@ -179,6 +178,8 @@ Game.prototype.inGame = function() {
 };
 
 // ----------- SELECTOR -----------//
+// This is the yellow rectangular image that is used to select a player
+// in the initial player selection screen
 var Selector = function(selectorURL, defaultSprite) {
     this.imgURL = selectorURL;
     this.x = 30;
